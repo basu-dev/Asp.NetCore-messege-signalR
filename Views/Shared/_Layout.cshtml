@@ -26,7 +26,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg  fixed-top mb-1" style='height:7vh;background-color:rgb(225, 227, 236);'>
+        <nav class="navbar navbar-expand-lg  fixed-top mb-1" style='height:7vh;background-color:rgb(211, 179, 242);'>
             <a class="navbar-brand" href="/">Message</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,10 +58,10 @@
                             {%endif%}
                     </li>
                     <form method='GET' action='/search/'>
-                        <li class='nav-item'>
+                        <li class='nav-item ml-4'>
                             <div class='btn-group'>
 
-                                <input name='search_query' class='ml-5 nav-link mt-2' type="search" placeholder="Search" aria-label="Search" style='border:2px solid white;border-radius:25px;position:relative;height:6vh;width:25vw;'>
+                                <input name='search_query' class='ml-5 nav-link mt-2' type="search" placeholder="Search" aria-label="Search" style='border:2px solid white;border-radius:25px;position:relative;height:6vh;width:30vw;'>
                                 <a class='nav-link'><button id='search' style='display:none;' class='btn btn-info'>Search</button></a>
                             </div>
 
@@ -74,14 +74,14 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <form method='POST' action='/logout/'>
-                        {%csrf_token%}
+                        
                         <button type='submit' class="btn btn-link nav-link">Logout</button>
                     </form>
                 </li>
                 </li>
         </nav>
 
-        <br />
+        
         <div class="card mt-3" style="height:100px;width:50vw;margin-left:25vw;background-color:blue;display:none;" ></div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">

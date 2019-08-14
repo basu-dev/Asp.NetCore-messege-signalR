@@ -26,7 +26,11 @@ namespace Messege.Controllers
             _context = context;
             _usermanager = usermanager;
         }
-       [HttpGet]
+        public IActionResult without()
+        {
+            return Json(_context.Messagess.ToList());
+        }
+      [HttpGet]
        public async Task<IActionResult> Index()
         {
            
