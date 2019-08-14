@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "signalr.js@2.4.0",
+      "destination": "wwwroot/signalr.js/"
+    },
+    {
+      "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/lib/jquery-validate/"
+    }
+  ,
+{
+  "library": "jquery-validation-unobtrusive@3.2.11",
+  "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
+  "files": [
+    "jquery.validate.unobtrusive.min.js",
+    "jquery.validate.unobtrusive.js"
+  ]
+}
+]
+}
