@@ -25,28 +25,20 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg  fixed-top mb-1" style='height:7vh;background-color:rgb(211, 179, 242);'>
-            <a class="navbar-brand" href="/">Message</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="row">
+        <div class="col-md-3 col-sm-0"></div>
+        <div class="col-md-6 col-sm-12">
+            <nav class='navbar  navbar-expand ' style='height:8vh;background-color:rgb(219, 166, 242);'>
+                <a class='navbar-brand' id='navbar-brand' href='/' style='margin-right:20%;'><img height=25 width=25 src='/static/message.svg'></a>
+                <ul class='navbar-nav mr-auto '>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item ml-3">
-                        <a class="nav-link mt-1" href="/profile/my_profile/"><img class='rounded-circle' height=32 width=32 src='{{request.user.profile.profile_picture.url}}'></a>
-                    </li>
-                    <li class="nav-item ml-3">
-                        <a class="nav-link mt-1" href="/">Storyline</a>
-                    </li>
 
-                    <li class="nav-item dropdown ml-3">
+                    <li class="nav-item dropdown ">
 
-                        <a class="nav-link mt-1" name='Notification' href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-bell">Notification</span>
+                        <a class="nav-link dropdown-toggle " name='Notification' href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span id='notification_icon'><img height=20 width=20 src='/static/notification.svg'></span>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu mr-0" id='notificationdiv' aria-labelledby="navbarDropdown">
                             {% if request.notification %}
                             {% for notification in request.notification %}
                             <a class="dropdown-item" href="{{notification.url}}">{{notification.body}}</a>
@@ -56,66 +48,30 @@
 
                             no notification
                             {%endif%}
+                        </div>
                     </li>
-                    <form method='GET' action='/search/'>
-                        <li class='nav-item ml-4'>
-                            <div class='btn-group'>
-
-                                <input name='search_query' class='ml-5 nav-link mt-2' type="search" placeholder="Search" aria-label="Search" style='border:2px solid white;border-radius:25px;position:relative;height:6vh;width:30vw;'>
-                                <a class='nav-link'><button id='search' style='display:none;' class='btn btn-info'>Search</button></a>
-                            </div>
-
-
-                    </form>
+                    <li class='nav-item ml-5'>
+                        <a class='nav-link' href='/setting/online_users/'><img height=20 width=20 src='/static/users.svg'></a>
+                    </li>
                 </ul>
+                <ul clas='navbar-nav ml-auto' style='list-style: none;'>
+                    <li class='nav-item'>
+                        <a class='nav-link mt-3 mr-3' href='/setting/'><img height=20 width=20 src='/static/user.svg'></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-3 col-sm-0"></div>
 
-            </div>
+    </div>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <form method='POST' action='/logout/'>
-                        
-                        <button type='submit' class="btn btn-link nav-link">Logout</button>
-                    </form>
-                </li>
-                </li>
-        </nav>
-
-        
-        <div class="card mt-3" style="height:100px;width:50vw;margin-left:25vw;background-color:blue;display:none;" ></div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Messege</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+    <div>
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - Messege - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -138,5 +94,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+    <script src="~/signalr.js"></script>
+    <script src="~/message.js"></script>
 </body>
 </html>

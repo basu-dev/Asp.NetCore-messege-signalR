@@ -1,0 +1,45 @@
+﻿@using Messege.ViewModels
+@using Messege.Models
+@model List<FriendNMessage>
+<div class="row">
+    <div class="col-md-3 col-sm-0"></div>
+    <div class="col-md-6 col-sm-12">
+   
+        <div id="frnmsg_update">
+            @if (Model != null)
+            {
+                @foreach (var friend in Model)
+                {
+                    @if (friend.Friend != null)
+                    {
+                        <div class="car mb-1 " id=@friend.Friend.Id>
+                            <a asp-controller="Home" asp-action="Message" asp-route-Id="@friend.Friend.Id" style="text-decoration:none">
+                                <div class="row">
+                                    
+                                    <div class="col-sm-1">
+                                        <img src="/@friend.Friend.Profile_Picture" height="45 " width="45" class="rounded-circle" />
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <b>@friend.Friend.First_Name @friend.Friend.Last_Name</b>
+                                        @if (friend.Message != null)
+                                        {
+                                            <div ><div class="ml-1">@friend.Sender  : @friend.Message</div></div>
+                                        }
+                                        else
+                                        {
+                                            <p></p>
+                                        }
+                                    </div>
+                                </div>
+                                
+                            </a>
+                        </div>
+
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-0"></div>
+</div>
+

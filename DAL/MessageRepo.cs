@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Messege.DAL
 {
-    public class MessageRepo
+    public class MessageRepo : IDisposable
     {
         private  ApplicationDbContext _context;
         private  UserManager<ApplicationUser> _usermanager;
@@ -17,6 +17,10 @@ namespace Messege.DAL
         {
             _context = context;
             _usermanager = usermanager;
+        }
+        public List<ApplicationUser> Search(string search)
+        {
+            return _context.AspNetUsers.Where(a => a.Email.Contains(search) || a.First_Name.Contains(search) || a.Last_Name.Contains(search)).ToList();
         }
         public void Save()
         {
@@ -67,7 +71,7 @@ namespace Messege.DAL
                 return false;
             }
         } 
-        private bool IsRequestSent(string c_user ,string with_user)
+        public bool IsRequestSent(string c_user ,string with_user)
         {
             try
             {
@@ -86,7 +90,7 @@ namespace Messege.DAL
                 return false;
             }
         }
-        private bool IsRequestReceived(string c_user, string with_user)
+        public bool IsRequestReceived(string c_user, string with_user)
         {
             try
             {
@@ -173,7 +177,26 @@ namespace Messege.DAL
 
                 return false;
         }
-        
+        public bool Disconnect(string c_user, string with_user)
+        {
+            if (IsFriend(c_user, with_user))
+            {
+
+                var req = _context.Friends.First(a => a.SenderId == with_user && a.Receiver == c_user);
+                _context.Friends.Remove(req);
+                Save();
+                return true;
+            }
+            else
+
+                return false;
+        }
+
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

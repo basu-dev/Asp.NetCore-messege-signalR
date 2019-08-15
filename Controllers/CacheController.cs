@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Messege.Models;
 using Messege.Data;
+using Messege.DAL;
 using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
 
 namespace Messege.Controllers
 {
@@ -16,45 +18,26 @@ namespace Messege.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IMemoryCache _cache;
-        public CacheController(ApplicationDbContext context,IMemoryCache cache)
+        private MessageRepo _repo;
+
+        public CacheController(ApplicationDbContext context,IMemoryCache cache, MessageRepo repo)
         {
             _context = context;
             _cache = cache;
+            _repo = repo;
         }
         // GET: api/Cache
         [HttpGet]
-        public IEnumerable<Messages> Get()
+        public IEnumerable<ApplicationUser> Get()
         {
-            List<Messages>messages = new List<Messages>();
-            _cache.TryGetValue("messages", out messages);
-            Messages m = new Messages
-            {
-                Sender = "SANAJTOHSH",
-                Receiver = "SANLJ;FN SAJ ",
-                Body = "THIS IS SI S "
-            };
-            Messages m2 = new Messages
-            {
-                Sender = "SANAJTOHSH",
-                Receiver = "SANLJ;FN SAJ ",
-                Body = "THIS IS SI S "
-            };
-            List<Messages> mm = new List<Messages>()
-            {
-                m,
-                m2
-            };
-            if (messages != null)
-            {
-                return messages;
-            }
-            else
-            {
-                messages=_context.Messagess.ToList();
-                _cache.Set("messages", messages,DateTime.Now.AddSeconds(500));
-                return mm;
+            var c_userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            }
+            return _repo.Search("bas");
+            
+            
+        
+
+            
             
         }
        // GET: api/Cache/5

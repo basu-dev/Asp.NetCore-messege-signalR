@@ -17,8 +17,12 @@ namespace Messege
             CreateWebHostBuilder(args).Build().Run();
         }
 
+
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        WebHost.CreateDefaultBuilder(args)
+            .UseUrls("https://*:5566")
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIISIntegration()
+            .UseStartup<Startup>();
     }
 }

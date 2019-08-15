@@ -1,6 +1,12 @@
 ﻿"use strict";
+$("#back").click(function () {
+    document.getElementById("frnmsg_update").style.display = "block";
+    document.getElementById("messagebox").style.display = "none";
+    
+});
 $(document).ready(function () {
-    $("#scrollanimate").stop().animate({ scrollTop: $("#scrollanimate")[0].scrollHeight })
+    $("#scrollanimate").stop().animate({ scrollTop: $("#scrollanimate")[0].scrollHeight });
+   
 
 })
 var connection = new signalR.HubConnectionBuilder()

@@ -30,13 +30,81 @@ namespace Messege.Controllers
         {
             return Json(_context.Messagess.ToList());
         }
-      [HttpGet]
-       public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-           
-            return View();
-           
-        }
+            List<FriendNMessage> FNM = new List<FriendNMessage>();
+            var c_userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser c_user = _usermanager.FindByIdAsync(c_userid).Result;
+            List<ApplicationUser> friend_profiles = new List<ApplicationUser>();
+            List<Messages> last_messages = new List<Messages>();
+            try
+            {
+                List<Friend> friends = _context.Friends.Where(a => a.Sender == c_user || a.Receiver == c_userid).ToList();
+
+                foreach (var friend in friends)
+                {
+
+
+                    if (friend.SenderId == c_userid)
+                    {
+                        FriendNMessage fnm = new FriendNMessage();
+                        ApplicationUser frn_profile = await _usermanager.FindByIdAsync(friend.Receiver);
+
+                        try
+                        {
+                            Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
+
+                            fnm.Friend = frn_profile;
+                            fnm.Message = last_message.Body;
+                            fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
+                        }
+                        catch (Exception)
+                        {
+                            fnm.Friend = frn_profile;
+                            fnm.Message = null;
+
+
+                        }
+                        FNM.Add(fnm);
+
+                    }
+
+                    else if (friend.Receiver == c_userid)
+                    {
+                        FriendNMessage fnm = new FriendNMessage();
+                        ApplicationUser frn_profile = await _usermanager.FindByIdAsync(friend.SenderId);
+                        try
+                        {
+                            Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
+
+                            fnm.Friend = frn_profile;
+                            fnm.Message = last_message.Body;
+                            fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
+
+                        }
+                        catch (Exception)
+                        {
+                            fnm.Friend = frn_profile;
+                            fnm.Message = null;
+                            FNM.Add(fnm);
+                        }
+                        FNM.Add(fnm);
+                    }
+
+                }
+
+
+            }
+            catch
+            {
+                FNM.Add(null);
+            }
+
+          return View(FNM);
+
+            }
+        
         public async Task<IActionResult> Message(string Id)
         {
             

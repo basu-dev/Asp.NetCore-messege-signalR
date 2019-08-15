@@ -17,6 +17,7 @@ namespace Messege.Data
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Add_Friend> Friend_Requests { get; set; }
         public DbSet<Profile>Profiles { get; set; }
+        public DbSet<ApplicationUser> AspNetUsers { get; set; } 
       
     }
 }

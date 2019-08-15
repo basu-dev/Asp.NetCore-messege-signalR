@@ -31,3 +31,5 @@ C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Messege.pdb
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Messege.csproj.CopyComplete
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\UserManager\Index.g.cshtml.cs
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Home\Message.g.cshtml.cs
+C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Search\Index.g.cshtml.cs
+C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs

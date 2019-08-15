@@ -4,80 +4,83 @@
 
 @model MessageView
 
-<div class="row">
-    <div  class="col-md-4">
-        <div class="card h5" style="background-color:rgb(219, 166, 242)">Messages</div>
-    <div id="frnmsg_update">
-   @if (Model.FriendNMessage != null)
-   {
-         @foreach (var friend in Model.FriendNMessage)
-   {
-             @if (friend.Friend != null)
-   {
-        <div class="card" id=@friend.Friend.Id>
-            <a asp-controller="Home" asp-action="Message" asp-route-Id="@friend.Friend.Id"><img src="/@friend.Friend.Profile_Picture"  height="30 " width="30" class="rounded-circle ml-1" /><span>@friend.Friend.First_Name @friend.Friend.Last_Name</span>
-            @if (friend.Message != null)
-   {
-            <div cass="ml-3"><div class="ml-4">@friend.Sender  : @friend.Message</div></div>
-   }
-   else
-   {
-               <p></p>
-   }
-            </a>
-        </div>
-        
-   }
-   }
-   }
-        </div>
-        </div>
-            
+    <div class="row">
+        <div class="col-sm-3"></div>
 
+        <div class="col-sm-6">
+            <div id="frnmsg_update" style="display:none">
+                @if (Model.FriendNMessage != null)
+                {
+                    @foreach (var friend in Model.FriendNMessage)
+                    {
+                        @if (friend.Friend != null)
+                        {
+                            <div class="card" id=@friend.Friend.Id>
+                                <a asp-controller="Home" asp-action="Message" asp-route-Id="@friend.Friend.Id">
+                                    <img src="/@friend.Friend.Profile_Picture" height="30 " width="30" class="rounded-circle ml-1" /><span>@friend.Friend.First_Name @friend.Friend.Last_Name</span>
+                                    @if (friend.Message != null)
+                                    {
+                                        <div cass="ml-3"><div class="ml-4">@friend.Sender  : @friend.Message</div></div>
+                                    }
+                                    else
+                                    {
+                                        <p></p>
+                                    }
+                                </a>
+                            </div>
 
-    
-    <div class="col-md-7">
-       @if (ViewBag.UserName != null)
-       {
-        <div class="card h5 " style="background-color:rgb(219, 166, 242);height:5vh">@ViewBag.UserName</div>
-
-
-        <div class='card message_update' id="scrollanimate" style='height:63vh;overflow-y:scroll;overflow-x:hidden'>
-          
-            
-                @foreach (var msg in Model.Conversation)
-       {
-                    @if (msg != null)
-       {
-                    @if (ViewBag.MyId == msg.Sender_Id)
-       {
-
-                        <div class="ml-auto mt-1 "><span class='alert alert-danger  '>@msg.Message</span> <img class='rounded-circle profile_picture_afno' height=30 width=30 src="/@msg.Sender_Profile_Picture"></div>
-
-       }
-       else
-       {
-                        <div class="mr-auto mt-1 "> <img class='rounded-circle profile_picture_arko' height=30 width=30 src="/@msg.Sender_Profile_Picture"><span class='alert alert-info  mr-1 mt-1' style="height:auto">@msg.Message</span></div>
-
-       }
-       }
-       }
-
+                        }
+                    }
+                }
             </div>
+            <div id="messagebox">
+                @if (ViewBag.UserName != null)
+                {
+
+                    <div class="card h5 " style="background-color:rgb(219, 166, 242);height:5vh">
+                        <span> <img src="~/static/back.svg" height="30" width="40" id="back" mr-1 / > @ViewBag.UserName </span>
+                    </div>
 
 
-            <div id="cuserid"value="@ViewBag.MyId" hidden></div>
-            <div id="userid" name="userid" value="@ViewBag.UserId" hidden></div>
-            <textarea id='message' name='message' class='mt-auto form-control' cols=36 rows=1 style="border-radius:20px"></textarea>
-            <button type='submit' id="send" class='btn btn-success btn-sm'>Send</button>
+                    <div class='card message_update' id="scrollanimate" style='height:70vh;overflow-y:scroll;overflow-x:hidden'>
 
-       }
+
+                        @foreach (var msg in Model.Conversation)
+                        {
+                            @if (msg != null)
+                            {
+                                @if (ViewBag.MyId == msg.Sender_Id)
+                                {
+
+                                    <div class="ml-auto mt-1 "><span class='alert alert-danger  '>@msg.Message</span> <img class='rounded-circle profile_picture_afno' height=30 width=30 src="/@msg.Sender_Profile_Picture"></div>
+
+                                }
+                                else
+                                {
+                                    <div class="mr-auto mt-1 "> <img class='rounded-circle profile_picture_arko' height=30 width=30 src="/@msg.Sender_Profile_Picture"><span class='alert alert-info  mr-1 mt-1' style="height:auto">@msg.Message</span></div>
+
+                                }
+                            }
+                        }
+
+                    </div>
+
+
+                    <div id="cuserid" value="@ViewBag.MyId" hidden></div>
+                    <div id="userid" name="userid" value="@ViewBag.UserId" hidden></div>
+                    <div class="btn-group" style="width:100%">
+                        <textarea id='message' name='message' class='mt-auto form-control' width="70%" rows=1 style="border-radius:20px"></textarea>
+                        <span><button type='submit' id="send" class='btn btn-success btn-sm form-control'>Send</button></span>
+                    </div>
+
+
+                }
+            </div>
         </div>
-        
-         
+    
+
+
         <div class="col-md-1"></div>
     </div>
 
     
-<script src="~/signalr.js"></script>
-<script src="~/message.js"></script>
