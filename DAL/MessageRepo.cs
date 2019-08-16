@@ -191,6 +191,10 @@ namespace Messege.DAL
 
                 return false;
         }
+        public ApplicationUser GetUserProfile(string userid)
+        {
+            return _context.AspNetUsers.First(a => a.Id == userid);
+        }
 
 
         public void Dispose()

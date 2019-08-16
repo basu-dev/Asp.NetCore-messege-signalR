@@ -33,30 +33,14 @@
                 <ul class='navbar-nav mr-auto '>
 
 
-                    <li class="nav-item dropdown ">
-
-                        <a class="nav-link dropdown-toggle " name='Notification' href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span id='notification_icon'><img height=20 width=20 src='/static/notification.svg'></span>
-                        </a>
-                        <div class="dropdown-menu mr-0" id='notificationdiv' aria-labelledby="navbarDropdown">
-                            {% if request.notification %}
-                            {% for notification in request.notification %}
-                            <a class="dropdown-item" href="{{notification.url}}">{{notification.body}}</a>
-                            <div class="dropdown-divider"></div>
-                            {%endfor%}
-                            {%else%}
-
-                            no notification
-                            {%endif%}
-                        </div>
-                    </li>
+            
                     <li class='nav-item ml-5'>
                         <a class='nav-link' href='/setting/online_users/'><img height=20 width=20 src='/static/users.svg'></a>
                     </li>
                 </ul>
                 <ul clas='navbar-nav ml-auto' style='list-style: none;'>
                     <li class='nav-item'>
-                        <a class='nav-link mt-3 mr-3' href='/setting/'><img height=20 width=20 src='/static/user.svg'></a>
+                        <a class='nav-link mt-3 mr-3' href='/profile'><img height=20 width=20 src='/static/user.svg'></a>
                     </li>
                 </ul>
             </nav>
