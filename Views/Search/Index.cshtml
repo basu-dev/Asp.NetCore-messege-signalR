@@ -11,13 +11,13 @@
                     <div>@result.First_Name @result.Last_Name</div>
                     @if (result.Status == 1)
                     {
-                        <button class="btn  btn-primary btn-sm button_request" id="@result.Id" value="disconnect">Disconnect</button>
+                        <button class="btn  btn-primary btn-sm button_request" name=@result.Id value=disconnect_@result.Id>Disconnect</button>
                     }
                     else if (result.Status == 2)
                     {
                         <div class="form-group">
-                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="accept">Accept</button>
-                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="decline">Decline</button>
+                            <button class="btn  btn-primary btn-sm button_request" name=@result.Id value=accept_@result.Id>Accept</button>
+                            <button class="btn  btn-primary btn-sm button_request" name=@result.Id value=decline_@result.Id>Decline</button>
 
                         </div>
 
@@ -25,7 +25,7 @@
                     else if (result.Status == 3)
                     {
                         <div class="form-group">
-                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="cancel_request">Cancel Request</button>
+                            <button class="btn  btn-primary btn-sm button_request" name=@result.Id value=cancel_request_@result.Id>Cancel Request</button>
                         </div>
                     }
                     else if (result.Status == 4)
@@ -35,7 +35,7 @@
                     else if (result.Status == 5)
                     {
 
-                        <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="connect">Connect</button>
+                        <button class="btn  btn-primary btn-sm button_request" name=@result.Id value=connect_@result.Id >Connect</button>
                     }
 
                 </div>

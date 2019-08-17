@@ -129,8 +129,8 @@ namespace Messege.DAL
                     
                 };
                _context.Friend_Requests.AddAsync(newfrnreq);
-                
-                Save();
+
+                _context.SaveChanges();
                 return true;
             }
            
@@ -138,21 +138,24 @@ namespace Messege.DAL
         }
         public bool Accept_Request(string c_user, string with_user)
         {
-            if (IsRequestReceived(c_user, with_user))
+            if (!IsRequestReceived(c_user, with_user))
             {
                 return false;
             }
             else
             {
+              var data=  _context.Friend_Requests.First(a => a.SenderId == with_user && a.Receiver == c_user); 
                 Friend newfrn = new Friend
                 {
                     SenderId = with_user,
                     Receiver = c_user,
                     Time = DateTime.Now,
                 };
-                _context.Friends.AddAsync(newfrn);
-                Save();
-                return true;
+               _context.Friends.AddAsync(newfrn);
+                _context.Friend_Requests.Remove(data);
+                _context.SaveChanges();
+
+                return true ;
             }
         }
         public bool Cancel_Request(string c_user, string with_user)
@@ -162,12 +165,13 @@ namespace Messege.DAL
 
                var req= _context.Friend_Requests.First(a => a.SenderId == c_user && a.Receiver == with_user);
                 _context.Friend_Requests.Remove(req);
-                Save();
+                _context.SaveChanges();
                 return true;
             }
             else
+            { return false; }
            
-                return false;
+                
             }
         public bool Decline_Request(string c_user, string with_user)
         {
@@ -176,7 +180,7 @@ namespace Messege.DAL
 
                 var req = _context.Friend_Requests.First(a => a.SenderId ==with_user  && a.Receiver == c_user);
                 _context.Friend_Requests.Remove(req);
-                Save();
+                _context.SaveChanges();
                 return true;
             }
             else
@@ -187,10 +191,9 @@ namespace Messege.DAL
         {
             if (IsFriend(c_user, with_user))
             {
-
                 var req = _context.Friends.First(a => a.SenderId == with_user && a.Receiver == c_user);
                 _context.Friends.Remove(req);
-                Save();
+                _context.SaveChanges();
                 return true;
             }
             else

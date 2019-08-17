@@ -24,7 +24,55 @@ namespace Messege.Hubs
             _usermanager = usermanager;
             repo = _repo;
         }
-          public async Task PrivateMessage(string Message,string Receiver)
+
+        public async Task Call_Request(string to, object sdp)
+        {
+            var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await Clients.User(to).SendAsync("incommingcall",c_userid, sdp);
+        }
+        public async Task Call_Accept(string to, object sdp)
+        {
+            await Clients.User(to).SendAsync("call_accepted", sdp);
+        }
+        public async Task Initial_Call_Request(string to,string from)
+        {
+           
+            var name = _context.AspNetUsers.First(a => a.Id == from);
+            List<string> users = new List<string>()
+            {
+                to,from,
+            };
+            await Clients.Users(users).SendAsync("initial_call_request", name.First_Name+" "+name.Last_Name,to,from);
+        }
+        public async Task Accept_Call(string from,string to)
+        {
+            List<string> users = new List<string>()
+            {
+                to,from,
+            };
+            await Clients.User(to).SendAsync("accept_call");
+        }
+        public async Task Reject_Call(string from , string to)
+        {
+            List<string> users = new List<string>()
+            {
+                to,from,
+            };
+            await Clients.User(to).SendAsync("reject_call");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public async Task PrivateMessage(string Message,string Receiver)
         {
            string c_userid= Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
            
@@ -49,10 +97,18 @@ namespace Messege.Hubs
         public async Task Unfriend(string userid)
         {
             var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var friend = _context.Friends.First(a => a.SenderId == c_userid && a.Receiver == userid || a.SenderId == userid && a.Receiver == c_userid);
-            _context.Friends.Remove(friend);
-           await _context.SaveChangesAsync();
-            await Clients.Users(userid, c_userid).SendAsync("Unfriend", userid);
+            
+            if (repo.Disconnect(c_userid, userid))
+            {
+                
+                await Clients.Users(c_userid, userid).SendAsync("Unfriend", "success", userid, c_userid);
+            }
+            else
+            {
+                
+                await Clients.Users(c_userid, userid).SendAsync("Unfriend", "failed", userid, c_userid);
+            }
+
         }
         public async Task Send_Request(string userid)
         {
@@ -60,13 +116,26 @@ namespace Messege.Hubs
             var abc = repo.Send_Request(c_userid, userid);
             if (abc)
             {
-                await Clients.Users(c_userid, userid).SendAsync("Send_Request","1" ,userid,c_userid);
+                await Clients.Users(c_userid, userid).SendAsync("Send_Request","success" ,userid,c_userid);
             }
             else
             {
-                await Clients.Users(c_userid, userid).SendAsync("Send_Request", "0", userid, c_userid);
+                await Clients.Users(c_userid, userid).SendAsync("Send_Request", "failed", userid, c_userid);
             }
           
+
+        }
+        public async Task Decline_Request(string userid)
+        {
+            var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (repo.Decline_Request(c_userid, userid))
+            {
+                await Clients.Users(c_userid, userid).SendAsync("Connect", "success", userid, c_userid);
+            }
+            else
+            {
+                await Clients.Users(c_userid, userid).SendAsync("Connect", "failed", userid, c_userid);
+            }
 
         }
         public async Task Cancel_Request(string userid)
@@ -74,11 +143,24 @@ namespace Messege.Hubs
             var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (repo.Cancel_Request(c_userid, userid))
             {
-                await Clients.Users(c_userid, userid).SendAsync("Cancel_Request", "1", userid, c_userid);
+                await Clients.Users(c_userid, userid).SendAsync("Cancel_Request", "success", userid, c_userid);
             }
             else
             {
-                await Clients.Users(c_userid, userid).SendAsync("Cancel_Request", "0", userid, c_userid);
+                await Clients.Users(c_userid, userid).SendAsync("Cancel_Request", "failed", userid, c_userid);
+            }
+
+        }
+        public async Task Accept_Request(string userid)
+        {
+            var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (repo.Accept_Request(c_userid, userid))
+            {
+                await Clients.Users(c_userid, userid).SendAsync("Accept_Request", "1", userid, c_userid);
+            }
+            else
+            {
+                await Clients.Users(c_userid, userid).SendAsync("Accept_Request", "0", userid, c_userid);
             }
 
         }

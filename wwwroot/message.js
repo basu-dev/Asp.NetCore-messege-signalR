@@ -1,19 +1,48 @@
-﻿"use strict";
+﻿
+"use strict";
+var connection = new signalR.HubConnectionBuilder().withUrl("/message").build();
 var userid = $("#userid").attr("value");
-$(".more_messages").click(function () {
-    var lowest_id = $(this).attr("value");
-    console.log(lowest_id);
+var c_userid = $("#cuserid").attr("value");
+$("#video_call").click(function () {
+    connection.invoke("Initial_Call_Request", userid,c_userid).catch(function (err) {
+        return console.error(err.toString);
+        console.log(userid);
+    });
+    connection.on("initial_call_request", function (name, to, from) {
+        console.log("aa");
+        if (from == c_userid) {
+            window.open("/videocall/index/" + to);
+        }
+        else if (to == c_userid) {
+            var a = confirm(name + "is calling you. Accept?");
+            if (a) {
+                connection.invoke("Accept_Call",c_userid,from).catch(function (err) {
+                    return console.error(err.toString);
+                    window.open("/videocall/incomingcall");
+                })
+            }
+            else {
+                connection.invoke("Reject_Call",c_userid,from).catch(function (err) {
+                    return console.error(err.toString);
+                })
+            }
+
+        }
+    })
 });
-var value = 0;
+    
+    $(".more_messages").click(function () {
+        var lowest_id = $(this).attr("value");
+        console.log(lowest_id);
+    });
+    var value = 0;
     $(function () {
         $("div.friend_message a").hover(function () {
             value = $(this).attr("Id");
-            
+
         });
     });
     $("div.friend_message a").click(function (e) {
-
-
         if (value === userid) {
             e.preventDefault();
             $("#frnmsg_update").css("display", "none");
@@ -47,8 +76,6 @@ var value = 0;
         var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         var myid = $("#cuserid").attr("value");
         var userid = $("#userid").attr("value");
-
-
         if (senid == myid) {
             var div = document.createElement("div");
             div.className = "ml-auto";
@@ -63,9 +90,6 @@ var value = 0;
             $("#scrollanimate").stop().animate({ scrollTop: $("#scrollanimate")[0].scrollHeight })
 
             document.getElementById("scrollanimate").append(div);
-
-
-
         }
         else if (senid == userid) {
             var div = document.createElement("div");
@@ -74,10 +98,8 @@ var value = 0;
             img.className = "rounded-circle";
             img.height = "30"; img.width = "30"; img.src = "/" + senprofilePicture;
             var span = document.createElement("span");
-
             span.className = "alert alert-info mt-1 alert-sm";
             span.innerHTML = msg;
-
             div.appendChild(img);
             div.appendChild(span);
             $("#scrollanimate").stop().animate({ scrollTop: $("#scrollanimate")[0].scrollHeight })
@@ -145,13 +167,11 @@ var value = 0;
 
 
     });
-
     connection.start().catch(function (err) {
         return console.error(err.toString());
     });
-
-    document.getElementById("send").addEventListener("click", function (event) {
-
+    function sendMessage() {
+        console.log("log");
         var message = document.getElementById("message").value;
 
         var userid = $("#userid").attr("value");
@@ -163,4 +183,18 @@ var value = 0;
             });
             document.getElementById("message").value = "";
         }
+    };
+
+    document.getElementById("send").addEventListener("click",
+        sendMessage
+    );
+    $("#message").keyup(function () {
+        var vaal = document.getElementById("message").value;
+
+        for (var i = 0; i < vaal.length; i++) {
+            if (vaal[i] == '\n') {
+                sendMessage();
+            };
+        };
     });
+

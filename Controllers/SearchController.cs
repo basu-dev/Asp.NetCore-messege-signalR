@@ -34,9 +34,14 @@ namespace Messege.Controllers
                     Last_Name = result.Last_Name,
                     Profile_Picture = result.Profile_Picture,
                 };
+               
                 if (_repo.IsFriend(c_userid, result.Id))
                 {
                     sv.Status = 1;
+                }
+                else if (_repo.IsRequestReceived(c_userid, result.Id))
+                {
+                    sv.Status = 2;
                 }
                 else if (_repo.IsRequestSent(c_userid, result.Id))
                 {

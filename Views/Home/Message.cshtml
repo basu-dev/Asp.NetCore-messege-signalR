@@ -50,9 +50,10 @@
                 {
                     
 
-                    <div class="card" style="background-color:rgb(219, 166, 242);height:auto">
-                        <span> <img src="~/static/back.svg" height="40" width="40" id="back" class="ml-1 mr-1" / > @ViewBag.UserName </span>
-                    </div>
+                <div class="card receivername" style="background-color:rgb(219, 166, 242);height:auto" >
+                    <span style="width:100%"> <img src="~/static/back.svg" height="40" width="40" id="back" class="ml-1 mr-1" / > @ViewBag.UserName 
+                    <img src="~/static/facetime.svg" height="35" width="40"  id="video_call" class="ml-auto" style="position:relative;left:66%"/></span>
+                </div>
 
 
                     <div class='card message_update' id="scrollanimate" style='height:70vh;overflow-y:scroll;overflow-x:hidden'>
@@ -82,12 +83,26 @@
                     <div id="cuserid" value="@ViewBag.MyId" hidden></div>
                     <div id="userid" name="userid" value="@ViewBag.UserId" hidden></div>
                     <div class="btn-group" style="width:100%">
-                        <textarea id='message' name='message' class='mt-auto form-control' width="70%" rows=1 style="border-radius:20px"></textarea>
+                        <textarea id='message' name='message' class='mt-auto form-control  message' width="70%" rows=1 style="border-radius:20px"></textarea>
                         <span><button type='submit' id="send" class='btn btn-success btn-sm form-control'>Send</button></span>
                     </div>
 
 
                 }
+            </div>
+        </div>
+        <div class="video_chat_box" hidden>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6" style="width:100%">
+
+                    <video autoplay id="usko_video" height="400" width="400"></video><br />
+
+
+                    <video class="text-center" autoplay id="mero_video" height="100" width="100"></video>
+
+                </div>
+                <div class="col-sm-3"></div>
             </div>
         </div>
     
