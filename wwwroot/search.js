@@ -1,21 +1,32 @@
 ﻿var connection = new signalR.HubConnectionBuilder()
-    .withUrl("/test"
+    .withUrl("/message"
 ).build()
+connection.on("Unfriend", function (userid) {
+    console.log("success");
+});
+connection.on("Send_Request", function (abc) {
+    console.log(abc);
+});
+connection.on("Cancel_Request", function (status, userid ,c_userid) {
+    console.log(status);
+});
+
 $(document).ready(function () {
-    $(".button_request").click(function (e) {
-        e.preventDefault();
+    $(".button_request").click(function () {
+        console.log("clicked");
         var userid = $(this).attr("Id");
         var fn = $(this).attr("Value");
         if (fn === "disconnect") {
             connection.invoke("Unfriend", userid).catch(function (err) {
                 return console.error(err.toString());
             });
-                
+ 
+     
         }
        
         else if (fn === "connect") {
             connection.invoke("Send_Request", userid).catch(function (err) {
-                return concole.error(err.toString());
+                return console.error(err.toString());
             });
 
         }
@@ -31,7 +42,7 @@ $(document).ready(function () {
             });
 
         }
-        else if (fn === "cancel") {
+        else if (fn === "cancel_request") {
             connection.invoke("Cancel_Request", userid).catch(function (err) {
                 return console.error(err.toString());
             });

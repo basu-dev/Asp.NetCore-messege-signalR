@@ -6,45 +6,45 @@
             <div class="card mb-1">SearchResults</div>
             @foreach (var result in Model)
             {
-        <div class="container text-center mb-2">
-            <img src="/@result.Profile_Picture" height="55" width="55" class="rounded-circle" />
-            <div>@result.First_Name @result.Last_Name</div>
-            @if (result.Status == 1)
-            {
-                <button class="btn  btn-primary btn-sm button_request" id="@result.Id" value="disconnect">Disconnect</button>
-            }
-            else if (result.Status == 2)
-            {
-                <div class="form-group">
-                    <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="accept">Accept</button>
-                    <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="decline">Decline</button>
+                <div class="container text-center mb-2">
+                    <img src="/@result.Profile_Picture" height="55" width="55" class="rounded-circle" />
+                    <div>@result.First_Name @result.Last_Name</div>
+                    @if (result.Status == 1)
+                    {
+                        <button class="btn  btn-primary btn-sm button_request" id="@result.Id" value="disconnect">Disconnect</button>
+                    }
+                    else if (result.Status == 2)
+                    {
+                        <div class="form-group">
+                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="accept">Accept</button>
+                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="decline">Decline</button>
+
+                        </div>
+
+                    }
+                    else if (result.Status == 3)
+                    {
+                        <div class="form-group">
+                            <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="cancel_request">Cancel Request</button>
+                        </div>
+                    }
+                    else if (result.Status == 4)
+                    {
+                        <div></div>
+                    }
+                    else if (result.Status == 5)
+                    {
+
+                        <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="connect">Connect</button>
+                    }
 
                 </div>
+            }
+            <script src="~/signalr.js"></script>
+            <script src="~/search.js"></script>
 
-            }
-            else if (result.Status == 3)
-            {
-                <div class="form-group">
-                    <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="cancel_request">Cancel Request</button>
-                </div>
-            }
-            else if (result.Status == 4)
-            {
-        <div ></div>
-            }
-            else if (result.Status == 5)
-            {
-                
-                <button class="btn  btn-primary btn-sm button_request" id=@result.Id value="connect"></button>
-            }
-
-        </div>
-            }
-
+            <script src="~/lib/jquery/dist/jquery.js"></script>
         </div>
         <div class="col-md-3"></div>
-        <script src="~/signalr.js"></script>
-        <script src="~/search.js"></script>
-        
-       <script src="~/lib/jquery/dist/jquery.js"></script>
+      
     </div>

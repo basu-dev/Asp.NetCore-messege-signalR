@@ -1,29 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
-using Messege.DAL;
-using Messege.Data;
-using Messege.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace Messege.Hubs
 {
-
-    public class test:Hub
+    public class test : Hub
     {
-      
-        private ApplicationDbContext _con;
-        private readonly UserManager<ApplicationUser> _user;
-        public MessageRepo repo;
-        public test(ApplicationDbContext con,UserManager<ApplicationUser>user)
+        public async Task Unfriend(string userid)
         {
-            _con = con;
-            _user = user;
-        
+            var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await Clients.Users(c_userid).SendAsync("Unfriend", userid);
         }
-    
-
     }
 }

@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Messege.DAL
 {
-    public class MessageRepo : IDisposable
+    public class MessageRepo : IMessageRepo
     {
         private  ApplicationDbContext _context;
-        private  UserManager<ApplicationUser> _usermanager;
 
-        public MessageRepo(ApplicationDbContext context,UserManager<ApplicationUser> usermanager)
+
+        public MessageRepo(ApplicationDbContext context)
         {
             _context = context;
-            _usermanager = usermanager;
+          
         }
         public List<ApplicationUser> Search(string search)
         {
@@ -36,6 +36,11 @@ namespace Messege.DAL
         {
             IEnumerable<Messages> m = _context.Messagess.Where(a => a.Sender == c_user && a.Receiver == with_urer || a.Sender == with_urer && a.Receiver == c_user).OrderByDescending(a => a.Id).Take(limit).ToList();
             return m.OrderBy(A => A.Id);
+        }
+        public IEnumerable<Messages> Get_Last_N_Message_Starting_With(string c_user, string with_urer, int limit,int lowest_id)
+        {
+            return  _context.Messagess.Where(a=>a.Id< lowest_id).Where(a => a.Sender == c_user && a.Receiver == with_urer || a.Sender == with_urer && a.Receiver == c_user).OrderByDescending(a => a.Id).Take(limit).ToList();
+            
         }
         public void Add_Message(Messages newmessage)
         {
@@ -109,7 +114,7 @@ namespace Messege.DAL
                 return false;
             }
         }
-        public bool Send_Request(string c_user , string with_user)
+        public  bool Send_Request(string c_user , string with_user)
         {
            if( IsFriend(c_user, with_user) || IsRequestSent(c_user, with_user) || IsRequestReceived(c_user,with_user))
             {
@@ -123,7 +128,8 @@ namespace Messege.DAL
                     Receiver = with_user,
                     
                 };
-                _context.Friend_Requests.AddAsync(newfrnreq);
+               _context.Friend_Requests.AddAsync(newfrnreq);
+                
                 Save();
                 return true;
             }

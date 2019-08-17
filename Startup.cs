@@ -37,7 +37,7 @@ namespace Messege
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddTransient<MessageRepo>();
+            services.AddScoped<IMessageRepo , MessageRepo>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -72,8 +72,9 @@ namespace Messege
             app.UseAuthentication();
             app.UseSignalR(routes =>
             {
+               
                 routes.MapHub<MessageHub>("/message");
-                routes.MapHub<test>("/test");
+                
                
             });
             app.UseMvc(routes =>

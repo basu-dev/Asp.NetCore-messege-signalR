@@ -113,7 +113,7 @@ namespace Messege.Controllers
             var c_userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser c_user = _usermanager.FindByIdAsync(c_userid).Result;
             ApplicationUser user = _usermanager.FindByIdAsync(Id).Result;
-            
+            Lowest_Message id = new Lowest_Message();
 
             List<ApplicationUser> friend_profiles = new List<ApplicationUser>();
             List<Messages> last_messages = new List<Messages>();
@@ -207,10 +207,20 @@ namespace Messege.Controllers
             /* For conversation Part */
             try
             {
+                
+                List<int> Ids = new List<int>();
+                int lowest_id = 0;
                 List<Messages> msgs = _context.Messagess.Where(a => a.Sender == c_userid && a.Receiver == Id || a.Sender == Id && a.Receiver == c_userid).OrderByDescending(a=>a.Id).Take(20).OrderBy(a=>a.Id).ToList();
+                if(msgs.Count != 0) {
+                    lowest_id = msgs.Min(a => a.Id);
+                }
+                
+                id.Last_Message_Id = lowest_id;
+              
+
                 foreach (Messages msg in msgs)
                 {
-                   
+                    
                     Conversation conv = new Conversation
                     {
                         Message = msg.Body,
@@ -223,7 +233,8 @@ namespace Messege.Controllers
                        
 
                     };
-                    if (msg.Sender == c_userid)
+                    
+                    if (msg.Sender == Id)
                     {
                         msg.Seen = true;
                     };
@@ -252,12 +263,14 @@ namespace Messege.Controllers
             {
                 FriendNMessage = FNM,
                 Conversation = Conv,
+                Lowest_Message = id,
 
             };
             string convcount = msgview.Conversation.Count.ToString();
             string frnnmsgcount = msgview.FriendNMessage.Count.ToString();
             ViewBag.ConversationCount=convcount;
             ViewBag.FrnNMessageCount = frnnmsgcount;
+            
            
             return View(msgview);
            

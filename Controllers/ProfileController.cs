@@ -12,9 +12,9 @@ namespace Messege.Controllers
 {
     public class ProfileController : Controller
     {
-        private MessageRepo _repo;
+        private readonly IMessageRepo _repo;
 
-        public ProfileController(MessageRepo repo)
+        public ProfileController(IMessageRepo repo)
         {
             _repo = repo;
         }

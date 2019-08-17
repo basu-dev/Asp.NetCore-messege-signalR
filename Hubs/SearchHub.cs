@@ -9,16 +9,21 @@ namespace Messege.Hubs
 {
     public class SearchHub:Hub
     {
-        private MessageRepo repo;
+        private IMessageRepo repo;
 
-        public SearchHub(MessageRepo _repo)
+        public SearchHub(IMessageRepo _repo)
         {
             repo = _repo;
+        }
+        public async Task Unfriend(string userid)
+        {
+            var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await Clients.Users(c_userid,userid).SendAsync("Unfriend", userid);
         }
          public  async Task Send_Request(string userid)
         {
             var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (repo.Send_Request(c_userid, userid))
+            if (repo.Send_Request(c_userid, userid) != null)
             {
                 await Clients.Users(c_userid, userid).SendAsync("Connect","1", userid, c_userid);
             }
@@ -67,16 +72,19 @@ namespace Messege.Hubs
             }
 
         }
-        public async Task Unfriend(string userid)
+        public async Task Unnfriend(string userid)
         {
             var c_userid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string value;
             if (repo.Disconnect(c_userid, userid))
             {
-                await Clients.Users(c_userid, userid).SendAsync("Connect", "1", userid, c_userid);
+                value = "1";
+                await Clients.Users(c_userid, userid).SendAsync("Unfriend", value, userid, c_userid);
             }
             else
             {
-                await Clients.Users(c_userid, userid).SendAsync("Connect", "0", userid, c_userid);
+                value = "0";
+                await Clients.Users(c_userid, userid).SendAsync("Unfriend", value, userid, c_userid);
             }
 
         }

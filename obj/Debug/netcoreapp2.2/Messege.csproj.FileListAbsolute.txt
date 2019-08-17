@@ -34,3 +34,4 @@ C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Home\Messa
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Search\Index.g.cshtml.cs
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Profile\Index.g.cshtml.cs
+C:\Users\dev\source\repos\Messege\obj\Debug\netcoreapp2.2\Razor\Views\Users\Index.g.cshtml.cs

@@ -12,9 +12,9 @@ namespace Messege.Controllers
 {
     public class SearchController : Controller
     {
-        private MessageRepo _repo;
+        private IMessageRepo _repo;
 
-        public SearchController(MessageRepo repo)
+        public SearchController(IMessageRepo repo)
         {
             _repo = repo;
         }
