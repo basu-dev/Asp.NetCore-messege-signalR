@@ -33,11 +33,7 @@ namespace Messege.Controllers
             var c_userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             return _repo.Search("bas");
-            
-            
-        
-
-            
+       
             
         }
        // GET: api/Cache/5

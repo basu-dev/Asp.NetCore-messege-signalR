@@ -35,21 +35,21 @@
                         <a class='nav-link' href='/users'><img height=22 width=22 src='/static/users.svg'></a>
                     </li>
                 </ul>
-                
+
                 <ul class='navbar-nav' style="width:100%;position:relative">
-                    <form method='GET' action='/search/index' style="width:100%;height:100%" >
+                    <form method='GET' action='/search/index' style="width:100%;height:100%">
                         <div class='btn-group' style="width:100%">
                             <input name='Id' class=' nav-link ' type="search" placeholder="Search" aria-label="Search" style='border:2px solid white;border-radius:25px;height:60%;width:90%;'>
-                            <a class='nav-link'><button id='search' class='btn btn-info' hidden>Search</button></a>
+
                         </div>
-                        </form>
+                    </form>
                 </ul>
-                    
-                    
-                        <ul class='navbar-nav '>
-                            <a class='nav-link ' href='/profile'><img height=22 width=22 src='/static/user.svg'></a>
-                        </ul>
-                   
+
+
+                <ul class='navbar-nav '>
+                    <a class='nav-link ' href='/profile'><img height=22 width=22 src='/static/user.svg'></a>
+                </ul>
+
             </nav>
         </div>
         <div class="col-md-3 col-sm-0"></div>
@@ -85,8 +85,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
-    <script src="~/signalr.js"></script>
-  
-    <script src="~/message.js"></script>
+
+    <script src="~/js/layout.js"></script>
 </body>
 </html>

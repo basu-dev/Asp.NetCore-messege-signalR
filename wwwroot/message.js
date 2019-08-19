@@ -1,34 +1,19 @@
 ﻿
 "use strict";
-var connection = new signalR.HubConnectionBuilder().withUrl("/message").build();
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/message", {
+        accessTokenFactory: () => "testing"
+    })
+    .build();
 var userid = $("#userid").attr("value");
 var c_userid = $("#cuserid").attr("value");
+
 $("#video_call").click(function () {
     connection.invoke("Initial_Call_Request", userid,c_userid).catch(function (err) {
         return console.error(err.toString);
         console.log(userid);
     });
-    connection.on("initial_call_request", function (name, to, from) {
-        console.log("aa");
-        if (from == c_userid) {
-            window.open("/videocall/index/" + to);
-        }
-        else if (to == c_userid) {
-            var a = confirm(name + "is calling you. Accept?");
-            if (a) {
-                connection.invoke("Accept_Call",c_userid,from).catch(function (err) {
-                    return console.error(err.toString);
-                    window.open("/videocall/incomingcall");
-                })
-            }
-            else {
-                connection.invoke("Reject_Call",c_userid,from).catch(function (err) {
-                    return console.error(err.toString);
-                })
-            }
 
-        }
-    })
 });
     
     $(".more_messages").click(function () {
@@ -65,11 +50,7 @@ $("#video_call").click(function () {
 
 
     })
-    var connection = new signalR.HubConnectionBuilder()
-        .withUrl("/message", {
-            accessTokenFactory: () => "testing"
-        })
-        .build();
+
 
     connection.on("PrivateMessage", function (message, recid, senid, senfirstName, recfirstName, senlastName, reclastName, senprofilePicture, recprofilePicture) {
 
@@ -171,7 +152,7 @@ $("#video_call").click(function () {
         return console.error(err.toString());
     });
     function sendMessage() {
-        console.log("log");
+      
         var message = document.getElementById("message").value;
 
         var userid = $("#userid").attr("value");

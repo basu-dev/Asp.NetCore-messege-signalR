@@ -48,12 +48,14 @@
             <div id="messagebox">
                 @if (ViewBag.UserName != null)
                 {
-                    
 
-                <div class="card receivername" style="background-color:rgb(219, 166, 242);height:auto" >
-                    <span style="width:100%"> <img src="~/static/back.svg" height="40" width="40" id="back" class="ml-1 mr-1" / > @ViewBag.UserName 
-                    <img src="~/static/facetime.svg" height="35" width="40"  id="video_call" class="ml-auto" style="position:relative;left:66%"/></span>
-                </div>
+
+                    <div class="card receivername" style="background-color:rgb(219, 166, 242);height:auto">
+                        <span style="width:100%">
+                            <img src="~/static/back.svg" height="40" width="40" id="back" class="ml-1 mr-1" / > @ViewBag.UserName
+                            <img src="~/static/facetime.svg" height="35" width="40" id="video_call" class="ml-auto" style="position:relative;left:66%" />
+                        </span>
+                    </div>
 
 
                     <div class='card message_update' id="scrollanimate" style='height:70vh;overflow-y:scroll;overflow-x:hidden'>
@@ -105,9 +107,11 @@
                 <div class="col-sm-3"></div>
             </div>
         </div>
-    
 
 
+        <script src="~/signalr.js"></script>
+
+        <script src="~/message.js"></script>
         <div class="col-md-1"></div>
     </div>
 

@@ -44,20 +44,18 @@ namespace Messege.Hubs
             };
             await Clients.Users(users).SendAsync("initial_call_request", name.First_Name+" "+name.Last_Name,to,from);
         }
-        public async Task Accept_Call(string from,string to)
+        public async Task Accept_Call(string to,string from)
         {
             List<string> users = new List<string>()
             {
                 to,from,
             };
-            await Clients.User(to).SendAsync("accept_call");
+            
+            await Clients.Users(users).SendAsync("Accept_Call",to,from);
         }
-        public async Task Reject_Call(string from , string to)
+        public async Task Reject_Call(string to)
         {
-            List<string> users = new List<string>()
-            {
-                to,from,
-            };
+         
             await Clients.User(to).SendAsync("reject_call");
         }
 
