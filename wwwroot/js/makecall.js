@@ -9,7 +9,7 @@ var connection = new signalR.HubConnectionBuilder()
 $("#button").click(function () {
     Call();
 });
-var state = 0;
+
 const to = $("#user").attr("Value");
 const video = document.getElementById('usko_video');
 const peerconnection = new RTCPeerConnection();
@@ -32,6 +32,7 @@ function Call() {
     connection.on('call_accepted', function (sdp) {
             console.log(sdp);
         peerconnection.setRemoteDescription(sdp);
+      
         console.log("new state : " + peerconnection.connectionState);
         
     }

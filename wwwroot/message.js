@@ -157,8 +157,8 @@ $("#video_call").click(function () {
 
         var userid = $("#userid").attr("value");
 
-        if (message) {
-
+        if (message != '\n') {
+            console.log("Message "+message);
             connection.invoke("PrivateMessage", message, userid).catch(function (err) {
                 return console.error(err.toString());
             });

@@ -5,18 +5,18 @@ connection.on("Unfriend", function (status, userid,c_userid) {
     console.log("success");
     if ($("#" + userid)) {
 
-        $("#" + userid).html("Connect");
+        $("#" + userid).val("Connect");
 
         $("#" + userid).attr("Value", "connect");
     };
 });
 connection.on("Send_Request", function (status,userid,c_userid) {
-    
-    if ($("#" + userid)) {
-       
-        $("#" + userid).html("Cancel Request");
+    console.log("success");
+    if ($("#connect_"+userid)) {
+        console.log("found");
+        $("#connect_"+userid).val("Cancel Request");
         
-        $("#" + userid).attr("Value", "cancel_request");
+        $("#connect_"+userid).attr("Value", "cancel_request_"+userid);
     };
 });
 connection.on("Decline_Request", function (status, userid ,c_userid) {
@@ -30,9 +30,22 @@ connection.on("Decline_Request", function (status, userid ,c_userid) {
 });
 connection.on("Cancel_Request", function (status, userid, c_userid) {
     console.log(status);
+    if ($("#" + userid)) {
+
+        $("#" + userid).html("Connect");
+
+        $("#" + userid).attr("Value", "connect");
+    }
 });
 connection.on("Accept_Request", function (status, userid, c_userid) {
     console.log(status);
+    if ($("#" + userid)) {
+
+        $("#" + userid).html("Disconnect");
+
+        $("#" + userid).attr("Value", "disconnect");
+        $("#"+userid)
+    }
 });
 
 $(document).ready(function () {
