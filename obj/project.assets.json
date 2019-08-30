@@ -12943,11 +12943,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dev\\source\\repos\\Messege\\Messege.csproj",
+      "projectUniqueName": "C:\\Users\\dev\\source\\repos\\Messanger-Angular\\Messege\\Messege.csproj",
       "projectName": "Messege",
-      "projectPath": "C:\\Users\\dev\\source\\repos\\Messege\\Messege.csproj",
+      "projectPath": "C:\\Users\\dev\\source\\repos\\Messanger-Angular\\Messege\\Messege.csproj",
       "packagesPath": "C:\\Users\\dev\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dev\\source\\repos\\Messege\\obj\\",
+      "outputPath": "C:\\Users\\dev\\source\\repos\\Messanger-Angular\\Messege\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

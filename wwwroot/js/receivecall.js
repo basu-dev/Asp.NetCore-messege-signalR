@@ -1,18 +1,22 @@
 ﻿"use strict";
 var userid = $(".senderid").attr("id");
 console.log(userid);
-var connection = new signalR.HubConnectionBuilder().withUrl("/message").build();
 
+var connection = new signalR.HubConnectionBuilder().withUrl("/message").build();
+$("#button").click(function () {
+    connection.invoke("Connect_By_Receiver", userid);
+})
 const peerconnection = new RTCPeerConnection();
 
     var video = document.getElementById('usko_video');
 connection.on('incommingcall', function (from, sdp) {
+    console.log("utabata aako sdp:" + sdp);
     if (from == userid) {
     peerconnection.setRemoteDescription(sdp)
         .then(() => peerconnection.createAnswer())
         .then(sdp => peerconnection.setLocalDescription(sdp)).
         then(function () {
-            console.log(peerconnection.remoteDescription)
+            console.log("my answer sdp: "+peerconnection.remoteDescription)
 
             connection.invoke('Call_Accept', from, peerconnection.localDescription).catch(function (err) {
                 return console.error(err.toString());
@@ -28,4 +32,4 @@ connection.on('incommingcall', function (from, sdp) {
     peerconnection.onaddstream = function (event) {
         video.srcObject = event.stream;
     }
-connection.start().then();
+connection.start();
