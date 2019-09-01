@@ -1,16 +1,18 @@
 ﻿<div class="senderid" id="@ViewBag.Sender" hidden></div>
 <div class="row">
     <div class="col-sm-3"></div>
-    <div class="col-sm-6" style="width:100%">
-        <button class="btn btn-primary btn-md text-center" id="button">Reconnect</button>
-        <video class="mt-0" style="transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg);-moz-transform:rotateY(180deg);" autoplay id="usko_video" height="400" width="400"></video><br />
-        <video class="mt-0" style="transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg);
-    -moz-transform:rotateY(180deg);"
-               autoplay id="mero_video" height="200" width="200"></video>
+    <div class="col-sm-6 mt-0" style="width:100%">
+
+        <video class="mt-0" autoplay id="usko_video"></video><br />
+        <div class="text-center" id="video_box">
+
+            <video autoplay id="mero_video"></video>
+        </div>
+        <button id="button" class="btn btn-md btn-primary text-center">Reconnect</button>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-3">
+        
+    </div>
 </div>
 <script src="~/signalr.js"></script>
 <script src="~/js/receivecall.js"></script>
