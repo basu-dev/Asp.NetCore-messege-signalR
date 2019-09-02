@@ -12,7 +12,10 @@ $("#button").click(function () {
 navigator.mediaDevices.getUserMedia({ video: true }).then(stream =>
     document.getElementById('mero_video').srcObject = new MediaStream(stream.getVideoTracks()));
 var video = document.getElementById('usko_video');
-const peerconnection = new RTCPeerConnection();
+var configuration = {
+    "iceServers": [{ "url": "stun:stun.1.google.com:19302" }]
+};
+const peerconnection = new RTCPeerConnection(configuration);
  
 connection.on('incommingcall', function (from, sdp) {
     

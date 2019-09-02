@@ -25,13 +25,16 @@ navigator.mediaDevices.getUserMedia({ video: true }).then(stream =>
 
 const to = $("#user").attr("Value");
 const video = document.getElementById('usko_video');
-const peerconnection = new RTCPeerConnection();
+var configuration = {
+    "iceServers": [{ "url": "stun:stun.1.google.com:19302" }]
+};
+const peerconnection = new RTCPeerConnection(configuration);
 async function Call() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).
-        then( function (stream) {
+        then(async function (stream) {
              peerconnection.addStream(stream);
            /* document.getElementById('mero_video').srcObject = new MediaStream(stream.getVideoTracks());*/
-            peerconnection.createOffer()
+           await peerconnection.createOffer().catch(error => console.log(error))
                 .then(sdp => peerconnection.setLocalDescription(sdp))
                 .then(function () {
                     connection.invoke('Call_Request', to, peerconnection.localDescription);

@@ -2,26 +2,45 @@
 for details on configuring this project to bundle and minify static web assets. */
 #video_box {
     float: left;
-    border:solid:5px;
 }
+
 #usko_video {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     width: 100%;
     height: 100%;
-    min-height: 370px;
-    background-image: url('../loadingg.gif');
-    
+    min-height: 75vh;
+   
+    background-image: url('../call.gif');
+    background-repeat: no-repeat;
+    background-attachment: inherit;
+    background-position: top top;
+    background-size: cover;
     border: solid 4px;
     border-radius: 3px;
     border-color: pink;
 }
 #button{
+    height:8vh;
     position:absolute;
-    top:90%;
-    margin-left:78%
+    bottom:2%;
+   
+    border-radius:50px;
+  
+   border:dotted 2px;
+    margin-left:40%;
+    cursor:pointer;
 }
+#button:hover{  
+    
+    height:14%;
+    font-size:medium;
+    
+    border:groove 2px;
+
+}
+
 #mero_video {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
@@ -31,7 +50,7 @@ for details on configuring this project to bundle and minify static web assets. 
     border-color: pink;
     position: absolute;
     float: left;
-    top: 67%;
+    bottom: 1%;
     width: 200px;
     margin: 0px;
     z-index: 300000;
