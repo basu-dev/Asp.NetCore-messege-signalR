@@ -58,22 +58,17 @@ async function Call() {
     );  
 }
 
-
-
-
-
-async function connectionStart() {
+ function connectionStart() {
     try {
-        await connection.start();
+         connection.start();
         console.log("connected");
     } catch (err) {
         console.log(err);
         setTimeout(() => connectionStart(), 5000);
     }
 };
-
-connection.onclose(async () => {
-    await connectionStart();
+connection.onclose(() => {
+     connectionStart();
 });
 
     

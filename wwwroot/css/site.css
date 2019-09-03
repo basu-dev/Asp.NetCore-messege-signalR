@@ -34,7 +34,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 #button:hover{  
     
-    height:14%;
+    height:9vh;
     font-size:medium;
     
     border:groove 2px;

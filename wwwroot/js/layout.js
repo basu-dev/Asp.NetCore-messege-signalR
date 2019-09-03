@@ -25,11 +25,11 @@ connection.on("Accept_Call", function (to, from) {
 
     if (from != c_userid) {
         console.log("receiver");
-        window.open("/videocall/incomingcall/"+from,location=1)
+        window.open("/videocall/incomingcall/"+from)
     }
     else {
         console.log("sender");
-        window.open("/videocall/index/" + to,location=1);
+        window.open("/videocall/index/" + to);
 
     };
 });
