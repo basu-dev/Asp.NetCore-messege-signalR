@@ -1,10 +1,7 @@
 ﻿@using Messege.ViewModels
 @using Messege.Models
 @model List<FriendNMessage>
-    <div class="row">
-        <div class="col-md-3 col-sm-0"></div>
-        <div class="col-md-6 col-sm-12">
-
+    
             <div id="frnmsg_update">
                 @if (Model != null)
                 {
@@ -40,11 +37,10 @@
                         }
                     }
                 }
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-0"></div>
+                </div>
+
         <script src="~/signalr.js"></script>
 
         <script src="~/message.js"></script>
-    </div>
+ 
 

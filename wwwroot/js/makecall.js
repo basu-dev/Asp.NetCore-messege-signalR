@@ -60,14 +60,17 @@ async function Call() {
 
  function connectionStart() {
     try {
-         connection.start();
+        connection.start();
+        state = 0;
         console.log("connected");
     } catch (err) {
+        state = 1;
         console.log(err);
         setTimeout(() => connectionStart(), 5000);
     }
 };
 connection.onclose(() => {
+    state = 1;
      connectionStart();
 });
 

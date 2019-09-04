@@ -27,7 +27,7 @@
 <body>
     <div class="row">
         <div class="col-md-3 col-sm-0"></div>
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-6 col-sm-12" id="home">
             <nav class='navbar  navbar-expand ' style='height:8vh;background-color:rgb(219, 166, 242)'>
                 <a class='navbar-brand' id='navbar-brand' href='/'><img height=27 width=27 src='/static/message.svg'></a>
                 <ul class='navbar-nav ml-4 mr-3 users ' style="display:block">
@@ -51,18 +51,18 @@
                 </ul>
 
             </nav>
+            <div>
+                <partial name="_CookieConsentPartial" />
+                <main role="main" class="pb-3" id="main_background" >
+                    @RenderBody()
+                </main>
+            </div>
         </div>
         <div class="col-md-3 col-sm-0"></div>
 
     </div>
 
-    <div>
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
+   
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
