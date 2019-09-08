@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Messege.DAL;
 using Messege.Models;
 using Messege.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Messege.Controllers
 {
@@ -18,6 +19,7 @@ namespace Messege.Controllers
         {
             _repo = repo;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Index(string Id)
         {

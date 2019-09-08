@@ -11,5 +11,6 @@ namespace Messege.ViewModels
         public string Last_Name { get; set; }
         public string Profile_Picture { get; set; }
         public string Email { get; set; }
+        public string Personal_Info {get;set;}
     }
 }

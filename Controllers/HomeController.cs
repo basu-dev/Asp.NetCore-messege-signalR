@@ -30,6 +30,7 @@ namespace Messege.Controllers
         {
             return Json(_context.Messagess.ToList());
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -104,7 +105,7 @@ namespace Messege.Controllers
           return View(FNM);
 
             }
-        
+        [Authorize]
         public async Task<IActionResult> Message(string Id)
         {
             
@@ -243,7 +244,7 @@ namespace Messege.Controllers
                 }
             }
 
-            catch (Exception e)
+            catch (Exception )
             {
                 Conv.Add(null); 
             }
@@ -255,7 +256,7 @@ namespace Messege.Controllers
             {
                 ViewBag.UserName = _usermanager.FindByIdAsync(Id).Result.First_Name;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return View();
             }

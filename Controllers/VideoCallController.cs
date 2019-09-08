@@ -13,6 +13,7 @@ namespace Messege.Controllers
             ViewBag.Receiver = Id;
             return View();
         }
+        [Authorize]
         public IActionResult IncomingCall(string Id)
         {
             ViewBag.Sender = Id;
