@@ -59,10 +59,15 @@ namespace Messege.Hubs
             await Clients.User(to).SendAsync("reject_call");
         }
 
-        public async Task Connect_By_Receiver(string from){
-            await Clients.User(from).SendAsync("connect_by_receiver");
 
-}
+
+
+
+
+
+
+
+
 
 
         public async Task PrivateMessage(string Message,string Receiver)
