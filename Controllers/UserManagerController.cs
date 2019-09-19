@@ -7,6 +7,7 @@ using Messege.ViewModels;
 using Messege.Data;
 using Microsoft.AspNetCore.Identity;
 using Messege.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Messege.Controllers
 {
@@ -22,11 +23,13 @@ namespace Messege.Controllers
             _usermanager = usermanager;
             _signinmanager = signinmanager;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Index(RegisterView Rgv)
         {

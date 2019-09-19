@@ -1,0 +1,46 @@
+﻿@using Messege.ViewModels
+@using Messege.Models
+@model List<FriendNMessage>
+    
+            <div id="frnmsg_update">
+                @if (Model != null)
+                {
+                    @foreach (var friend in Model)
+                    {
+                        @if (friend.Friend != null)
+                        {
+                            <div class="container mb-1 " id=@friend.Friend.Id>
+                                <a asp-controller="Home" asp-action="Message" asp-route-Id="@friend.Friend.Id" style="text-decoration:none">
+                                    <div class="row">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr class="">
+
+                                                    <td class="col-sm-3 " style="width:auto;height:auto;border:none;padding:1px"><img src="/@friend.Friend.Profile_Picture" height="60 " width="60" class="rounded-circle ml-3 mr-1" /></td>
+                                                    <td class="col-sm-7 " style="margin:auto;padding:5px">
+                                                        <h5>@friend.Friend.First_Name @friend.Friend.Last_Name</h5>
+                                                        @if (friend.Message != null)
+                                                        {
+                                                            <div><div class="ml-1">@friend.Sender  : @friend.Message</div></div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p></p>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                </div>
+
+        <script src="~/signalr.js"></script>
+
+        <script src="~/message.js"></script>
+ 
+

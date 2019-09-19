@@ -30,6 +30,7 @@ namespace Messege.Controllers
         {
             return Json(_context.Messagess.ToList());
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -55,16 +56,13 @@ namespace Messege.Controllers
                         {
                             Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
 
-                            fnm.First_Name = frn_profile.First_Name;
-                            fnm.Last_name = frn_profile.Last_Name;
-                            fnm.Profile_Picture = frn_profile.Profile_Picture;
-                            fnm.User_Id = frn_profile.Id;
+                            fnm.Friend = frn_profile;
                             fnm.Message = last_message.Body;
                             fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
                         }
                         catch (Exception)
                         {
-                            
+                            fnm.Friend = frn_profile;
                             fnm.Message = null;
 
 
@@ -81,20 +79,14 @@ namespace Messege.Controllers
                         {
                             Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
 
-                            fnm.First_Name = frn_profile.First_Name;
-                            fnm.Last_name = frn_profile.Last_Name;
-                            fnm.Profile_Picture = frn_profile.Profile_Picture;
-                            fnm.User_Id = frn_profile.Id;
+                            fnm.Friend = frn_profile;
                             fnm.Message = last_message.Body;
                             fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
 
                         }
                         catch (Exception)
                         {
-                            fnm.First_Name = frn_profile.First_Name;
-                            fnm.Last_name = frn_profile.Last_Name;
-                            fnm.Profile_Picture = frn_profile.Profile_Picture;
-                            fnm.User_Id = frn_profile.Id;
+                            fnm.Friend = frn_profile;
                             fnm.Message = null;
                             FNM.Add(fnm);
                         }
@@ -110,34 +102,110 @@ namespace Messege.Controllers
                 FNM.Add(null);
             }
 
-          return Json(FNM);
+          return View(FNM);
 
             }
         [Authorize]
-        public  IActionResult Message(string Id)
-        {  
+        public async Task<IActionResult> Message(string Id)
+        {
+            
             List<Conversation> Conv = new List<Conversation>();
-            RemoteUserDetail detail = new RemoteUserDetail();
+            List<FriendNMessage> FNM = new List<FriendNMessage>();
             var c_userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser c_user = _usermanager.FindByIdAsync(c_userid).Result;
             ApplicationUser user = _usermanager.FindByIdAsync(Id).Result;
             Lowest_Message id = new Lowest_Message();
 
-            /* For conversation Part */
+            List<ApplicationUser> friend_profiles = new List<ApplicationUser>();
+            List<Messages> last_messages = new List<Messages>();
             try
             {
-                var remote_user = _usermanager.FindByIdAsync(Id).Result;
-                detail.First_Name = remote_user.First_Name;
-                detail.Last_Name = remote_user.Last_Name;
-                detail.Profile_Picture = remote_user.Profile_Picture;
-                detail.User_Id = remote_user.Id;
+                List<Friend> friends = _context.Friends.Where(a => a.Sender == c_user ||a.Receiver== c_userid).ToList();
+                
+                foreach (var friend in friends)
+                {
+                    
+
+                    if (friend.SenderId == c_userid)
+                    {
+                        FriendNMessage fnm = new FriendNMessage();
+                        ApplicationUser frn_profile = await _usermanager.FindByIdAsync(friend.Receiver);
+
+                        try
+                        {
+                            Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
+
+                            fnm.Friend = frn_profile;
+                            fnm.Message = last_message.Body;
+                            fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
+                        }
+                        catch (Exception)
+                        {
+                            fnm.Friend = frn_profile;
+                            fnm.Message = null;
+                            
+
+                        }
+                        FNM.Add(fnm);
+
+                    }
+
+                    else if(friend.Receiver==c_userid)
+                    {
+                        FriendNMessage fnm = new FriendNMessage();
+                        ApplicationUser frn_profile =await _usermanager.FindByIdAsync(friend.SenderId);
+                        try
+                        {
+                            Messages last_message = _context.Messagess.Last(a => a.Sender == friend.SenderId && a.Receiver == friend.Receiver || a.Sender == friend.Receiver && a.Receiver == friend.SenderId);
+
+                            fnm.Friend = frn_profile;
+                            fnm.Message = last_message.Body;
+                            fnm.Sender = _usermanager.FindByIdAsync(last_message.Sender).Result.First_Name;
+                            
+                        }
+                        catch (Exception)
+                        {
+                            fnm.Friend = frn_profile;
+                            fnm.Message = null;
+                            FNM.Add(fnm);
+                        }
+                        FNM.Add(fnm);
+                    }
+                    
+                }
+
+                
+            }
+            catch
+            {
+                FNM.Add(null);
+            }
+            
+            if (user == null)
+            {
+                Conversation convs = new Conversation
+                {
+                    Message = null,
+                    Sender_First_Name = null,
+                    Sender_Last_Name = null,
+                    Sender_Profile_Picture = null,
+                    Sender_Id = null,
+                    Receiver_First_Name = null,
+                    Receiver_Last_Name = null,
+                };
+                Conv.Add(convs);
+                
+                MessageView msview = new MessageView
+                {
+                    FriendNMessage=FNM,
+                   Conversation=Conv,
+
+                };
+
+                return View(msview);
 
             }
-            catch(Exception)
-            {
-                
-                return Json(NotFound);
-            }
+            /* For conversation Part */
             try
             {
                 
@@ -153,12 +221,18 @@ namespace Messege.Controllers
 
                 foreach (Messages msg in msgs)
                 {
-
+                    
                     Conversation conv = new Conversation
                     {
                         Message = msg.Body,
-                        Sender_Id = msg.Sender,
-                        Receiver_Id = msg.Receiver
+                        Sender_First_Name = _usermanager.FindByIdAsync(msg.Sender).Result.First_Name,
+                        Sender_Last_Name= _usermanager.FindByIdAsync(msg.Sender).Result.Last_Name,
+                        Sender_Profile_Picture = _usermanager.FindByIdAsync(msg.Sender).Result.Profile_Picture,
+                        Sender_Id= msg.Sender,
+                        Receiver_First_Name = _usermanager.FindByIdAsync(msg.Receiver).Result.First_Name,
+                        Receiver_Last_Name = _usermanager.FindByIdAsync(msg.Receiver).Result.Last_Name,
+                       
+
                     };
                     
                     if (msg.Sender == Id)
@@ -174,26 +248,36 @@ namespace Messege.Controllers
             {
                 Conv.Add(null); 
             }
+            
 
+            ViewBag.UserId = Id;
+            ViewBag.MyId = c_userid;
+            try
+            {
+                ViewBag.UserName = _usermanager.FindByIdAsync(Id).Result.First_Name;
+            }
+            catch(Exception)
+            {
+                return View();
+            }
             MessageView msgview = new MessageView
             {
-                Detail = detail,
+                FriendNMessage = FNM,
                 Conversation = Conv,
                 Lowest_Message = id,
 
-
             };
-   
-            return Json(msgview);
+            string convcount = msgview.Conversation.Count.ToString();
+            string frnnmsgcount = msgview.FriendNMessage.Count.ToString();
+            ViewBag.ConversationCount=convcount;
+            ViewBag.FrnNMessageCount = frnnmsgcount;
+            
+           
+            return View(msgview);
            
          
             
             
-        }
-
-        private IActionResult Json(Func<NotFoundResult> notFound)
-        {
-            throw new NotImplementedException();
         }
     }
     

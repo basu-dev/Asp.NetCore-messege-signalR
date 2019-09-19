@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Messege</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-3 col-sm-0"></div>
+        <div class="col-md-6 col-sm-12" id="home">
+            <nav class='navbar  navbar-expand ' style='height:8vh;background-color:rgb(219, 166, 242)'>
+                <a class='navbar-brand' id='navbar-brand' href='/'><img height=27 width=27 src='/static/message.svg'></a>
+                <ul class='navbar-nav ml-4 mr-3 users ' style="display:block">
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/users'><img height=22 width=22 src='/static/users.svg'></a>
+                    </li>
+                </ul>
+
+                <ul class='navbar-nav' style="width:100%;position:relative">
+                    <form method='GET' action='/search/index' style="width:100%;height:100%">
+                        <div class='btn-group' style="width:100%">
+                            <input name='Id' class=' nav-link ' type="search" placeholder="Search" aria-label="Search" style='border:2px solid white;border-radius:25px;height:60%;width:90%;'>
+
+                        </div>
+                    </form>
+                </ul>
+
+
+                <ul class='navbar-nav '>
+                    <a class='nav-link ' href='/profile'><img height=22 width=22 src='/static/user.svg'></a>
+                </ul>
+
+            </nav>
+            <div>
+                <partial name="_CookieConsentPartial" />
+                <main role="main" class="pb-3" id="main_background" >
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-0"></div>
+
+    </div>
+
+   
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script src="~/js/layout.js"></script>
+</body>
+</html>
